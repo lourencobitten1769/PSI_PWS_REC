@@ -1,0 +1,42 @@
+<?php
+use ArmoredCore\WebObjects\Asset;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+use ArmoredCore\WebObjects\Data;
+
+$airport=Data::get('airport');
+
+Layout::includeLayout('nousernav'); ?>
+
+
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="<?=Asset::css('forms.css')?>">
+
+</head>
+
+<body>
+<div class="center">
+    <h1>Editar Informações do Aeroporto</h1>
+    <form method="post" action="<?=URL::toRoute('airport/update',$airport->airport_id)?>">
+        <div class="txt_field">
+            <input type="text" value="<?=$airport->airport_name?>" name="airport_name" required>
+            <span></span>
+            <label>Nome do Aeroporto</label>
+        </div>
+        <div class="txt_field">
+            <input type="text" value="<?=$airport->country?>" name="country" required>
+            <span></span>
+            <label>País</label>
+        </div>
+        <div class="txt_field">
+            <input type="text" value="<?=$airport->city?>" name="city" required>
+            <span></span>
+            <label>Cidade</label>
+        </div>
+        <div class="pass"></div>
+        <input type="submit" value="Editar">
+    </form>
+</div>
+</body>

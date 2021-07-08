@@ -18,7 +18,7 @@ Layout::includeLayout('administradornav');
 <div class="wrapper">
     <table>
         <th><h1>Lista de Aeroportos</h1></th>
-        <th><button class="btn btn-info">Adicionar</button></th>
+        <th><a href="<?=URL::toRoute('airport/create')?>"><button class="btn btn-info">Adicionar</button></a></th>
     </table>
     <table class="table table-dark table-striped table-hover">
 
@@ -32,14 +32,19 @@ Layout::includeLayout('administradornav');
             </tr>
         </thead>
         <tbody>
+        <?php
+        foreach ($airports as $airport){
+            ?>
             <tr>
-                <th scope="row">1</th>
-                <td>Aeroporto Humberto Delgado</td>
-                <td>Portugal</td>
-                <td>Lisboa</td>
-                <td><button class="btn btn-warning">Editar</button><button class="btn btn-danger">Eliminar</button></td>
-            </tr>
+                <th scope="row"><?=$airport->airport_id?></th>
+                <td><?=$airport->airport_name?></td>
+                <td><?=$airport->country?></td>
+                <td><?=$airport->city?></td>
+                <td><a href="<?=URL::toRoute('airport/edit',$airport->airport_id)?>"><button class="btn btn-warning">Editar</button></a><a href="<?=URL::toRoute('airport/destroy',$airport->airport_id)?>"><button class="btn btn-danger">Eliminar</button></a></td>
+        </tr>
+        <?php
+        }
+        ?>
+
         </tbody>
     </table>
-
-</div>

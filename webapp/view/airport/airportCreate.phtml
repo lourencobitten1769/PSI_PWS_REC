@@ -1,0 +1,39 @@
+<?php
+use ArmoredCore\WebObjects\Asset;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+use ArmoredCore\WebObjects\Data;
+
+Layout::includeLayout('nousernav'); ?>
+
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="<?=Asset::css('forms.css')?>">
+
+</head>
+
+<body>
+<div class="center">
+    <h1>Registo de Aeroporto</h1>
+    <form method="post" action="<?=URL::toRoute('airport/store')?>">
+        <div class="txt_field">
+            <input type="text" name="airport_name" required>
+            <span></span>
+            <label>Nome do Aeroporto</label>
+        </div>
+        <div class="txt_field">
+            <input type="text" name="country" required>
+            <span></span>
+            <label>País</label>
+        </div>
+        <div class="txt_field">
+            <input type="text" name="city" required>
+            <span></span>
+            <label>Cidade</label>
+        </div>
+        <div class="pass"></div>
+        <input type="submit" value="Registar">
+    </form>
+</div>
+</body>

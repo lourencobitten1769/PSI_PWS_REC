@@ -27,40 +27,9 @@ class AirportController extends BaseController implements ResourceControllerInte
         return View::make('airport.airportList', ['airports' => $airports]);
     }
 
-    public function login(){
-        return View::make('user.login');
-    }
-
-    public function processLogin(){
-        $user = new User(Post::getAll());
-
-
-        $userisset = User::find_by_username_and_password($user->username, md5($user->password));
-
-
-        if (is_null($userisset)) {
-            return View::make('user.login');
-        } else {
-            $_SESSION['id']= $userisset->user_id;
-            $_SESSION['username'] = $user->username;
-            $_SESSION['profile'] = $userisset->profile_id;
-
-            if($_SESSION['profile']==1){
-                return View::make('airport.listagemAeroportos');
-            }
-            if($_SESSION['profile']==2){
-                //$airport = Aeroporto::all();
-                return View::make('home.index');
-            }
-            else{
-
-            }
-        }
-    }
-
     public function create()
     {
-        return View::make('user.register');
+        return View::make('airport.airportCreate');
     }
 
     /**
@@ -70,17 +39,15 @@ class AirportController extends BaseController implements ResourceControllerInte
     {
         //create new resource (activerecord/model) instance with data from POST
         //your form name fields must match the ones of the table fields
-        $user = new User(Post::getAll());
-        $user->points=0;
-        $user->profile_id=2;
-        $user->password=md5($user->password);
-        var_dump($user);
-        if($user->is_valid()){
-            $user->save();
-            Redirect::toRoute('user/login');
+        $airport = new Airport(Post::getAll());
+
+        var_dump($airport);
+        if($airport->is_valid()){
+            $airport->save();
+            Redirect::toRoute('airport/index');
         } else {
             //redirect to form with data and errors
-            Redirect::flashToRoute('user/create', ['user' => $user]);
+            Redirect::flashToRoute('airport/create', ['airport' => $airport]);
         }
     }
 
@@ -105,12 +72,12 @@ class AirportController extends BaseController implements ResourceControllerInte
      */
     public function edit($id)
     {
-        $book = Book::find([$id]);
+        $airport = Airport::find([$id]);
 
-        if (is_null($book)) {
+        if (is_null($airport)) {
             //TODO redirect to standard error page
         } else {
-            return View::make('book.edit', ['book' => $book]);
+            return View::make('airport.airportEdit', ['airport' => $airport]);
         }
     }
 
@@ -122,15 +89,15 @@ class AirportController extends BaseController implements ResourceControllerInte
     {
         //find resource (activerecord/model) instance where PK = $id
         //your form name fields must match the ones of the table fields
-        $book = Book::find([$id]);
-        $book->update_attributes(Post::getAll());
+        $airport = Airport::find([$id]);
+        $airport->update_attributes(Post::getAll());
 
-        if($book->is_valid()){
-            $book->save();
-            Redirect::toRoute('book/index');
+        if($airport->is_valid()){
+            $airport->save();
+            Redirect::toRoute('airport/index');
         } else {
             //redirect to form with data and errors
-            Redirect::flashToRoute('book/edit', ['book' => $book]);
+            Redirect::flashToRoute('airport/edit', ['airport' => $airport]);
         }
     }
 
@@ -140,8 +107,8 @@ class AirportController extends BaseController implements ResourceControllerInte
      */
     public function destroy($id)
     {
-        $book = book::find([$id]);
-        $book->delete();
-        Redirect::toRoute('book/index');
+        $airport = Airport::find([$id]);
+        $airport->delete();
+        Redirect::toRoute('airport/index');
     }
 }
