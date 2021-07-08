@@ -4,7 +4,7 @@ use ArmoredCore\WebObjects\Layout;
 use ArmoredCore\WebObjects\URL;
 use ArmoredCore\WebObjects\Data;
 
-Layout::includeLayout('administradorNav'); ?>
+Layout::includeLayout('gestorNav'); ?>
 
 <head>
     <title>Login</title>
@@ -15,22 +15,22 @@ Layout::includeLayout('administradorNav'); ?>
 
 <body>
 <div class="center">
-    <h1>Registo de Aeroporto</h1>
-    <form method="post" action="<?=URL::toRoute('airport/store')?>">
+    <h1>Registo de Avião</h1>
+    <form method="post" action="<?=URL::toRoute('airplane/store')?>">
         <div class="txt_field">
-            <input type="text" name="airport_name" required>
+            <input type="text" name="airplane_reference" required>
             <span></span>
-            <label>Nome do Aeroporto</label>
+            <label>Referência do Avião</label>
         </div>
         <div class="txt_field">
-            <input type="text" name="country" required>
+            <input type="text" name="airplane_name" required>
             <span></span>
-            <label>País</label>
+            <label>Nome do Avião</label>
         </div>
         <div class="txt_field">
-            <input type="text" name="city" required>
+            <input type="text" name="capacity" required>
             <span></span>
-            <label>Cidade</label>
+            <label>Capacidade do Avião</label>
         </div>
         <div class="pass"></div>
         <input type="submit" value="Registar">

@@ -1,0 +1,58 @@
+<?php
+use ArmoredCore\WebObjects\Asset;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+use ArmoredCore\WebObjects\Data;
+
+$users=Data::get('users');
+Layout::includeLayout('administradornav');
+?>
+
+<head>
+    <title>Todos os Utilizadores</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="<?=Asset::css('tables.css')?>">
+
+</head>
+
+<div class="wrapper">
+    <table>
+        <th><h1>Lista de Utilizadores (FALTA FAZER TROCA DE PERFIS E METER A DROPDOWN A FUNCIONAR)</h1></th>
+    </table>
+    <table class="table table-dark table-striped table-hover">
+
+        <thead>
+        <tr>
+            <th scope="col">ID do Utilizador</th>
+            <th scope="col">Nome do Utilizador</th>
+            <th scope="col">Data de Nascimento</th>
+            <th scope="col">Email</th>
+            <th scope="col">Número de Telemóvel</th>
+            <th scope="col">Pontos</th>
+            <th scope="col">Perfil</th>
+            <th scope="col">Operações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        foreach ($users as $user){
+
+            ?>
+            <tr>
+                <th scope="row"><?=$user->user_id?></th>
+                <td><?=$user->fullname?></td>
+                <td><?=$user->birth_date?></td>
+                <td><?=$user->email?></td>
+                <td><?=$user->phone_number?></td>
+                <td><?=$user->points?></td>
+                <td><?=$user->ShowTypeOfUser($user->profile_id)?></td>
+
+                <td><a href="<?=URL::toRoute('airport/edit',$user->user_id)?>"><button class="btn btn-warning">Editar</button></a><a href="<?=URL::toRoute('airport/destroy',$user->user_id)?>"><button class="btn btn-danger">Eliminar</button></a></td>
+            </tr>
+            <?php
+        }
+        ?>
+
+        </tbody>
+    </table>
+

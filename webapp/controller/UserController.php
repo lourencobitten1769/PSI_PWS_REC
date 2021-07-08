@@ -23,8 +23,18 @@ class UserController extends BaseController implements ResourceControllerInterfa
      */
     public function index()
     {
-        $books = Book::all();
-        return View::make('book.index', ['books' => $books]);
+        $users = User::all();
+        return View::make('user.usersList', ['users' => $users]);
+    }
+
+    public function showGestorDeVoo(){
+        $users=User::find_all_by_profile_id(3);
+        return View::make('user.usersList',['users'=>$users]);
+    }
+
+    public function showOperadorDeCheckin(){
+        $users=User::find_all_by_profile_id(4);
+        return View::make('user.usersList',['users'=>$users]);
     }
 
     public function login(){
@@ -48,12 +58,13 @@ class UserController extends BaseController implements ResourceControllerInterfa
             if($_SESSION['profile']==1){
                 Redirect::toRoute("airport/index");
             }
-            if($_SESSION['profile']==2){
+            else if($_SESSION['profile']==2){
                 //$airport = Aeroporto::all();
                 return View::make('home.index');
             }
-            else{
-
+            else if($_SESSION['profile']==3){
+                //$airport = Aeroporto::all();
+                Redirect::toRoute("airplane/index");
             }
         }
     }

@@ -22,6 +22,7 @@ Router::get('test/index',  'TestController/index');
 
 Router::resource('user','UserController');
 Router::resource('airport','AirportController');
+Router::resource('airplane','AirplaneController');
 
 
 

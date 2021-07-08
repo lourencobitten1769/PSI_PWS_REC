@@ -4,7 +4,7 @@ use ArmoredCore\WebObjects\Layout;
 use ArmoredCore\WebObjects\URL;
 use ArmoredCore\WebObjects\Data;
 
-$airport=Data::get('airport');
+$airplane=Data::get('airplane');
 
 Layout::includeLayout('administradorNav'); ?>
 
@@ -19,21 +19,21 @@ Layout::includeLayout('administradorNav'); ?>
 <body>
 <div class="center">
     <h1>Editar Informações do Aeroporto</h1>
-    <form method="post" action="<?=URL::toRoute('airport/update',$airport->airport_id)?>">
+    <form method="post" action="<?=URL::toRoute('airplane/update',$airplane->airplane_id)?>">
         <div class="txt_field">
-            <input type="text" value="<?=$airport->airport_name?>" name="airport_name" required>
+            <input type="text" value="<?=$airplane->airplane_reference?>" name="airplane_reference" required>
+            <span></span>
+            <label>Referência do Avião</label>
+        </div>
+        <div class="txt_field">
+            <input type="text" value="<?=$airplane->airplane_name?>" name="airplane_name" required>
             <span></span>
             <label>Nome do Aeroporto</label>
         </div>
         <div class="txt_field">
-            <input type="text" value="<?=$airport->country?>" name="country" required>
+            <input type="text" value="<?=$airplane->capacity?>" name="capacity" required>
             <span></span>
-            <label>País</label>
-        </div>
-        <div class="txt_field">
-            <input type="text" value="<?=$airport->city?>" name="city" required>
-            <span></span>
-            <label>Cidade</label>
+            <label>Capacidade do Avião</label>
         </div>
         <div class="pass"></div>
         <input type="submit" value="Editar">

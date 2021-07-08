@@ -1,0 +1,52 @@
+<?php
+use ArmoredCore\WebObjects\Asset;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+use ArmoredCore\WebObjects\Data;
+
+$airplanes=Data::get('airplanes');
+
+Layout::includeLayout('gestornav');
+?>
+
+    <head>
+        <title>ListarAeroportos</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="<?=Asset::css('tables.css')?>">
+
+    </head>
+
+    <div class="wrapper">
+    <table>
+        <th><h1>Lista de Aviões</h1></th>
+        <th><a href="<?=URL::toRoute('airplane/create')?>"><button class="btn btn-info">Adicionar</button></a></th>
+    </table>
+    <table class="table table-dark table-striped table-hover">
+
+        <thead>
+        <tr>
+            <th scope="col">ID do Avião</th>
+            <th scope="col">Referência do Avião</th>
+            <th scope="col">Nome do Avião</th>
+            <th scope="col">Capacidade</th>
+            <th scope="col">Operações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        foreach ($airplanes as $airplane){
+            ?>
+            <tr>
+                <th scope="row"><?=$airplane->airplane_id?></th>
+                <td><?=$airplane->airplane_reference?></td>
+                <td><?=$airplane->airplane_name?></td>
+                <td><?=$airplane->capacity?></td>
+                <td><a href="<?=URL::toRoute('airplane/edit',$airplane->airplane_id)?>"><button class="btn btn-warning">Editar</button></a><a href="<?=URL::toRoute('airplane/destroy',$airplane->airplane_id)?>"><button class="btn btn-danger">Eliminar</button></a></td>
+            </tr>
+            <?php
+        }
+        ?>
+
+        </tbody>
+    </table>
+<?php
