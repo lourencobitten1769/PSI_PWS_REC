@@ -1,0 +1,91 @@
+<?php
+use ArmoredCore\WebObjects\Asset;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+use ArmoredCore\WebObjects\Data;
+
+$flight=Data::get('flight');
+$airports=Data::get('airports');
+$airplanes=Data::get('airplanes');
+var_dump($airports);
+
+if(!isset($_SESSION['id'])){
+    \ArmoredCore\WebObjects\Redirect::toRoute('user/login');
+}
+
+Layout::includeLayout('gestorNav'); ?>
+
+
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="<?=Asset::css('forms.css')?>">
+
+</head>
+
+<body>
+<div class="center">
+    <h1>Editar Informações do Voo</h1>
+    <form method="post" action="<?=URL::toRoute('flight/update',$flight->flight_id)?>">
+        <div class="txt_field">
+            <input type="text" value="<?=$flight->flight_price?>" name="flight_price" required>
+            <span></span>
+            <label>Nome do Aeroporto</label>
+        </div>
+        <div class="txt_field">
+            <input type="datetime-local" value="<?=$flight->date_hour_departure?>" name="date_hour_departure" required>
+            <span></span>
+            <label>Partida</label>
+        </div>
+        <div class="txt_field">
+            <input type="datetime-local" value="<?=$flight->date_hour_arrival?>" name="date_hour_arrival" required>
+            <span></span>
+            <label>Chegada</label>
+        </div>
+        <div class="txt_field">
+            <input type="text" value="<?=$flight->distance?>" name="distance" required>
+            <span></span>
+            <label>Distância</label>
+        </div>
+
+        Origem:
+        <select name="origin">
+            <option value="<?=$flight->origin_airport->airport_id?>"><?=$flight->origin_airport->airport_name?></option>
+            <?php
+            foreach ($airports as $airport){
+                if($flight->origin_airport->airport_id!=$airport->airport_id){?>
+                    <option value="<?=$airport->airport_id?>"><?=$airport->airport_name?></option>
+                <?php
+                }
+            }
+            ?>
+
+        </select>
+        <br><br>
+        Destino:
+        <select name="destination">
+            <option value="<?=$flight->destination_airport->airport_id?>"><?=$flight->destination_airport->airport_name?></option>
+            <?php
+            foreach ($airports as $airport){
+                if($flight->destination_airport->airport_id!=$airport->airport_id){?>?>
+                    <option value="<?=$airport->airport_id?>"><?=$airport->airport_name?></option>
+                <?php
+                }
+            }
+            ?>
+        </select>
+        <br><br>
+        Avião de Partida:
+        <select name="airplane_id">
+            <?php
+            foreach ($airplanes as $airplane){?>
+                <option value="<?=$airplane->airplane_id?>"><?=$airplane->airplane_name?></option>
+                <?php
+            }
+            ?>
+        </select>
+        <div class="pass"></div>
+        <input type="submit" value="Editar">
+    </form>
+</div>
+</body>

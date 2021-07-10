@@ -4,6 +4,8 @@ use \ActiveRecord\Model;
 
 class User extends Model
 {
+    static $has_many = [['user', 'foreign_key' =>'user_id', 'class_name' => 'User']];
+
     public function ShowTypeOfUser($tipouser){
         switch ($tipouser){
             case '1':

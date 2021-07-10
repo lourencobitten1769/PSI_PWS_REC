@@ -4,7 +4,16 @@ use ArmoredCore\WebObjects\Layout;
 use ArmoredCore\WebObjects\URL;
 use ArmoredCore\WebObjects\Data;
 
-Layout::includeLayout('administradorNav'); ?>
+Layout::includeLayout('administradorNav');
+
+if(!isset($_SESSION['id'])){
+    \ArmoredCore\WebObjects\Redirect::toRoute('user/login');
+}
+else{
+    echo "Logado";
+}
+?>
+
 
 <head>
     <title>Login</title>

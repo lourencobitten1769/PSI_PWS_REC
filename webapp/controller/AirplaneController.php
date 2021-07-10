@@ -107,8 +107,8 @@ class AirplaneController extends BaseController implements ResourceControllerInt
      */
     public function destroy($id)
     {
-        $airport = Airport::find([$id]);
-        $airport->delete();
+        $airplane = Airplane::find([$id]);
+        $airplane->delete();
         Redirect::toRoute('airport/index');
     }
 }

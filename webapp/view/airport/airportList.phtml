@@ -6,6 +6,10 @@ use ArmoredCore\WebObjects\Data;
 
 $airports=Data::get('airports');
 
+if(!isset($_SESSION['id'])){
+    \ArmoredCore\WebObjects\Redirect::toRoute('user/login');
+}
+
 Layout::includeLayout('administradornav');
 ?>
 

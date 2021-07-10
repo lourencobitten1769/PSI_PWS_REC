@@ -1,0 +1,86 @@
+<?php
+use ArmoredCore\WebObjects\Asset;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+use ArmoredCore\WebObjects\Data;
+
+$scale=Data::get('scale');
+$airports=Data::get('airports');
+$airplanes=Data::get('airplanes');
+var_dump($airports);
+
+if(!isset($_SESSION['id'])){
+    \ArmoredCore\WebObjects\Redirect::toRoute('user/login');
+}
+
+Layout::includeLayout('gestorNav'); ?>
+
+
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="<?=Asset::css('forms.css')?>">
+
+</head>
+
+<body>
+<div class="center">
+    <h1>Editar Informações da Escala</h1>
+    <form method="post" action="<?=URL::toRoute('scale/update',$scale->scale_id)?>">
+        <div class="txt_field">
+            <input type="text" value="<?=$scale->distance?>" name="distance" required>
+            <span></span>
+            <label>Distância</label>
+        </div>
+        <div class="txt_field">
+            <input type="datetime-local" value="<?=$scale->date_hour_departure?>" name="date_hour_departure" required>
+            <span></span>
+            <label>Partida</label>
+        </div>
+        <div class="txt_field">
+            <input type="datetime-local" value="<?=$scale->date_hour_arrival?>" name="date_hour_arrival" required>
+            <span></span>
+            <label>Chegada</label>
+        </div>
+
+        Origem:
+        <select name="origin">
+            <option value="<?=$scale->origin_airport->airport_id?>"><?=$scale->origin_airport->airport_name?></option>
+            <?php
+            foreach ($airports as $airport){
+                if($scale->origin_airport->airport_id!=$airport->airport_id){?>
+                    <option value="<?=$airport->airport_id?>"><?=$airport->airport_name?></option>
+                <?php
+                }
+            }
+            ?>
+
+        </select>
+        <br><br>
+        Destino:
+        <select name="destination">
+            <option value="<?=$scale->destination_airport->airport_id?>"><?=$scale->destination_airport->airport_name?></option>
+            <?php
+            foreach ($airports as $airport){
+                if($scale->destination_airport->airport_id!=$airport->airport_id){?>?>
+                    <option value="<?=$airport->airport_id?>"><?=$airport->airport_name?></option>
+                <?php
+                }
+            }
+            ?>
+        </select>
+        <br><br>
+        Avião de Partida:
+        <select name="airplane_id">
+            <?php
+            foreach ($airplanes as $airplane){?>
+                <option value="<?=$airplane->airplane_id?>"><?=$airplane->airplane_name?></option>
+                <?php
+            }
+            ?>
+        </select>
+        <div class="pass"></div>
+        <input type="submit" value="Editar">
+    </form>
+</div>
+</body>

@@ -57,10 +57,10 @@ else{
     <!-- Intro -->
         <div class="center">
             <h1>Pesquisar Voo</h1>
-            <form method="post" action="<?=URL::toRoute('user/processLogin')?>">
+            <form method="post" action="<?=URL::toRoute('flight/procurar')?>">
                 <div class="select-box">
                     <label for="tipoPesquisa">Pesquisar por: </label>
-                    <select id="tipoPesquisa">
+                    <select id="tipoPesquisa" name="tipoPesquisa">
                         <option value="data"> Por data</option>
                         <option value="origemDestino">Por Origem e Destino</option>
                     </select>
@@ -76,9 +76,7 @@ else{
                         <span></span>
                 <!-- <label>Destino</label>
              </div>-->
-
-
-
+                    <input type="submit" value="Procurar">
         </div>
         </form>
     </div>

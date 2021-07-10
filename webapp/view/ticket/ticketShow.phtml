@@ -1,0 +1,46 @@
+<?php
+use ArmoredCore\WebObjects\Asset;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+use ArmoredCore\WebObjects\Data;
+
+$ticket= Data::get('ticket');
+
+
+    $html="<h1>Bilhete para o voo " . $ticket->flight_id ." com origem no ". $ticket->flight->origin_airport->airport_name . "e destino no ". $ticket->flight->destination_airport->airport_name . "</h1>
+        ID do Ticket:" . $ticket->ticket_id . "<br> Preço:".$ticket->total_price. "<br> Data de Compra da Passagem:" . $ticket->purchase_date . "<br> Ida e volta:" . $ticket->round_trip ."<br> Escalas:";
+
+    foreach ($ticket->flight->scale as $scale){
+        $html+= $scale->origin . "<br>" . $scale->destination;
+
+
+    }
+
+
+//chamar o dompdf com namespace por causa do conflito de nomes
+use Dompdf\Dompdf;
+
+// include autoloader
+require_once 'D:\wamp64\www\PSI_PWS_PL1-E\pdfs\autoload.inc.php';
+
+//Criar a instancia
+$pdf = new Dompdf();
+
+//Colocar dados no PDF
+$pdf->loadHtml('
+'. $html . '
+');
+
+//renderizar o html
+$pdf->render();
+
+//mostrar a pagina
+$pdf->stream(
+    "Bilhete_voo_377",
+
+    array(
+        "Attachment" => false //true faz download automatico, false faz download facultativo
+    )
+);
+
+?>

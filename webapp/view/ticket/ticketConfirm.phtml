@@ -1,0 +1,66 @@
+<?php
+use ArmoredCore\WebObjects\Asset;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+use ArmoredCore\WebObjects\Data;
+
+ActiveRecord\Connection::$datetime_format = 'Y-m-d H:i:s';
+$flight=Data::get('flight');
+$origin=Data::get('origin');
+$destination=Data::get('destination');
+$user=Data::get('user');
+$_SESSION['flight_id']=$flight->flight_id;
+
+if(!isset($_SESSION['id'])){
+    \ArmoredCore\WebObjects\Redirect::toRoute('user/login');
+}
+
+Layout::includeLayout('usernav'); ?>
+
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="<?=Asset::css('forms.css')?>">
+
+</head>
+
+<body>
+<div class="center">
+    <h1>Confirmar detalhes do voo</h1>
+    <form method="post" action="<?=URL::toRoute('ticket/store')?>">
+        <div class="txt_field">
+            <input type="text" value="<?=$user->fullname?>" readonly name="user_id" required>
+            <span></span>
+            <label>Cliente</label>
+        </div>
+        <div class="txt_field">
+            <input type="text" value="<?=$origin->airport_name?>" readonly name="origin" required>
+            <span></span>
+            <label>Origem</label>
+        </div>
+        <div class="txt_field">
+            <input type="text" value="<?=$destination->airport_name?>" readonly name="destination" required>
+            <span></span>
+            <label>Destino</label>
+        </div>
+        <div class="txt_field">
+            <input type="text" value="<?=$flight->date_hour_departure?>" readonly name="date_hour_departure" required>
+            <span></span>
+            <label>Partida</label>
+        </div>
+        <div class="txt_field">
+            <input type="text" value="<?=$flight->flight_price?>" readonly name="flight_price" required>
+            <span></span>
+            <label>Preço</label>
+        </div>
+
+        Ida e volta: <select name="roundtrip">
+            <option value="Não">Não</option>
+            <option value="Sim">Sim</option>
+        </select>
+
+        <div class="pass"></div>
+        <input type="submit" value="Registar">
+    </form>
+</div>
+</body>

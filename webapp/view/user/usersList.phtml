@@ -5,6 +5,11 @@ use ArmoredCore\WebObjects\URL;
 use ArmoredCore\WebObjects\Data;
 
 $users=Data::get('users');
+
+if(!isset($_SESSION['id'])){
+    \ArmoredCore\WebObjects\Redirect::toRoute('user/login');
+}
+
 Layout::includeLayout('administradornav');
 ?>
 
