@@ -24,17 +24,28 @@ class UserController extends BaseController implements ResourceControllerInterfa
     public function index()
     {
         $users = User::all();
-        return View::make('user.usersList', ['users' => $users]);
+        $profiles= Profile::all();
+        return View::make('user.usersList', ['users' => $users , 'profiles'=>$profiles]);
     }
 
     public function showGestorDeVoo(){
         $users=User::find_all_by_profile_id(3);
-        return View::make('user.usersList',['users'=>$users]);
+        $profiles= Profile::all();
+        return View::make('user.usersList',['users'=>$users ,'profiles'=>$profiles]);
     }
 
     public function showOperadorDeCheckin(){
         $users=User::find_all_by_profile_id(4);
-        return View::make('user.usersList',['users'=>$users]);
+        $profiles= Profile::all();
+        return View::make('user.usersList',['users'=>$users ,'profiles'=>$profiles]);
+    }
+
+    public function changeProfile($id){
+        $user=User::find_by_user_id($id);
+        $user->profile_id= Post::get('profile_id');
+        $user->save();
+
+        Redirect::toRoute('user/index');
     }
 
     public function login(){
@@ -66,8 +77,14 @@ class UserController extends BaseController implements ResourceControllerInterfa
                 //$airport = Aeroporto::all();
                 Redirect::toRoute("airplane/index");
             }
+            else if($_SESSION['profile']==4){
+                //$airport = Aeroporto::all();
+                Redirect::toRoute("ticket/ticketsWithoutCheckin");
+            }
         }
     }
+
+
 
     public function create()
     {
@@ -116,12 +133,12 @@ class UserController extends BaseController implements ResourceControllerInterfa
      */
     public function edit($id)
     {
-        $book = Book::find([$id]);
+        $user = User::find([$id]);
 
-        if (is_null($book)) {
+        if (is_null($user)) {
             //TODO redirect to standard error page
         } else {
-            return View::make('book.edit', ['book' => $book]);
+            return View::make('user.userEdit', ['user' => $user]);
         }
     }
 
@@ -133,15 +150,15 @@ class UserController extends BaseController implements ResourceControllerInterfa
     {
         //find resource (activerecord/model) instance where PK = $id
         //your form name fields must match the ones of the table fields
-        $book = Book::find([$id]);
-        $book->update_attributes(Post::getAll());
+        $user = User::find([$id]);
+        $user->update_attributes(Post::getAll());
 
-        if($book->is_valid()){
-            $book->save();
-            Redirect::toRoute('book/index');
+        if($user->is_valid()){
+            $user->save();
+            Redirect::toRoute('home/index');
         } else {
             //redirect to form with data and errors
-            Redirect::flashToRoute('book/edit', ['book' => $book]);
+            Redirect::flashToRoute('user/edit', ['user' => $user]);
         }
     }
 
@@ -154,5 +171,11 @@ class UserController extends BaseController implements ResourceControllerInterfa
         $book = book::find([$id]);
         $book->delete();
         Redirect::toRoute('book/index');
+    }
+
+    public function logout(){
+
+        session_destroy();
+        Redirect::toRoute('user/login');
     }
 }

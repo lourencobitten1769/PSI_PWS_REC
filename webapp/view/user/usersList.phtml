@@ -5,6 +5,8 @@ use ArmoredCore\WebObjects\URL;
 use ArmoredCore\WebObjects\Data;
 
 $users=Data::get('users');
+$profiles=Data::get('profiles');
+
 
 if(!isset($_SESSION['id'])){
     \ArmoredCore\WebObjects\Redirect::toRoute('user/login');
@@ -22,7 +24,7 @@ Layout::includeLayout('administradornav');
 
 <div class="wrapper">
     <table>
-        <th><h1>Lista de Utilizadores (FALTA FAZER TROCA DE PERFIS E METER A DROPDOWN A FUNCIONAR)</h1></th>
+        <th><h1>Lista de Utilizadores </h1></th>
     </table>
     <table class="table table-dark table-striped table-hover">
 
@@ -35,7 +37,7 @@ Layout::includeLayout('administradornav');
             <th scope="col">Número de Telemóvel</th>
             <th scope="col">Pontos</th>
             <th scope="col">Perfil</th>
-            <th scope="col">Operações</th>
+
         </tr>
         </thead>
         <tbody>
@@ -50,9 +52,30 @@ Layout::includeLayout('administradornav');
                 <td><?=$user->email?></td>
                 <td><?=$user->phone_number?></td>
                 <td><?=$user->points?></td>
-                <td><?=$user->ShowTypeOfUser($user->profile_id)?></td>
+                <?php
+                if($_SESSION['profile']==1){
+                ?>
+                <td>
+                    <form method="post" action="<?=URL::toRoute('user/changeProfile',$user->user_id)?>">
+                        <select name="profile_id">
+                            <option value="<?=$user->profile_id?>"><?=$user->ShowTypeOfUser($user->profile_id)?></option>
+                            <?php
+                            foreach ($profiles as $profile) {
+                                if($user->profile_id!=$profile->profile_id){?>
+                                    <option value="<?=$profile->profile_id?>"><?=$profile->profile_name?></option>
+                                        <?php
+                                }
+                            }
+                            ?>
+                        </select>
+                        </td><td>
+                        <input class="btn btn-warning" type="submit" value="Alterar perfil do Utilizador">
+                    </form>
+                </td>
+                <?php
 
-                <td><a href="<?=URL::toRoute('airport/edit',$user->user_id)?>"><button class="btn btn-warning">Editar</button></a><a href="<?=URL::toRoute('airport/destroy',$user->user_id)?>"><button class="btn btn-danger">Eliminar</button></a></td>
+                }
+                ?>
             </tr>
             <?php
         }

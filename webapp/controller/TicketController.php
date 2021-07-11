@@ -37,6 +37,18 @@ class TicketController extends BaseController implements ResourceControllerInter
         return View::make('ticket.ticketConfirm',['flight'=>$flight , 'origin'=>$origin , 'destination'=>$destination, 'user'=>$user]);
     }
 
+    public function ticketsWithoutCheckin(){
+        $tickets= Ticket::find_all_by_checkin("Não");
+        return View::make('ticket.ticketForCheckin', ['tickets'=>$tickets]);
+    }
+
+    public function processCheckin($id){
+        $ticket= Ticket::find_by_ticket_id($id);
+        $ticket->checkin="Sim";
+        $ticket->save();
+        Redirect::toRoute('ticket/ticketsWithoutCheckin');
+    }
+
     public function scales($flight_id){
         $flights = Flight::all();
         $origins = [];

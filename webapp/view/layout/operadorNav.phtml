@@ -43,12 +43,9 @@ use ArmoredCore\WebObjects\URL;
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav pull-right">
-                <li class="active"><a href="<?= URL::toRoute('home/index')?>">Procurar Voos</a></li>
-                <li><a href="<?= URL::toRoute('home/start')?>">Consultar todos os voos</a></li>
-
-
-                <li><a class="btn" href="<?= URL::toRoute('user/create')?>">Registar</a></li>
-                <li><a class="btn" href="<?= URL::toRoute('user/login')?>">Entrar</a></li>
+                <li><a href="<?= URL::toRoute('ticket/ticketsWithoutCheckin')?>">Realizar checkin dos voos</a></li>
+                <li><a href="<?= URL::toRoute('user/edit', $_SESSION['id'])?>">Alterar informações da conta</a></li>
+                <li><a href="<?= URL::toRoute('user/logout')?>">Logout</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

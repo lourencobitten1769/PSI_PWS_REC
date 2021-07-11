@@ -43,15 +43,11 @@ use ArmoredCore\WebObjects\URL;
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav pull-right">
-                <li class="dropdown">
-                    <a href="#"href="<?= URL::toRoute('user/usersList')?>">Gerir Utilizadores<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li class="active"><a href="<?=Url::toRoute('home/worksheet')?>">Worksheet</a></li>
-                        <li><a href="<?= Url::toRoute('devtools/index')?>">Resource Controller Builder</a></li>
-                        <li><a href="<?= Url::toRoute('devtools/accomponents')?>">Armored Core Components</a></li>
-                    </ul>
-                </li>
-                <li><a href="<?= URL::toRoute('home/start')?>">Gerir Aeroportos</a></li>
+                <li><a href="<?= URL::toRoute('user/index')?>">Gerir todos os utilizadores</a></li>
+                <li><a href="<?= URL::toRoute('user/showGestorDeVoo')?>">Gerir gestores de voo</a></li>
+                <li><a href="<?= URL::toRoute('user/showOperadorDeCheckin')?>">Gerir operadores de checkin</a></li>
+                <li><a href="<?= URL::toRoute('airport/index')?>">Gerir Aeroportos</a></li>
+                <li><a href="<?= URL::toRoute('user/logout')?>">Logout</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

@@ -1,0 +1,60 @@
+<?php
+use ArmoredCore\WebObjects\Asset;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+use ArmoredCore\WebObjects\Data;
+
+$user=Data::get('user');
+
+if(!isset($_SESSION['id'])){
+    \ArmoredCore\WebObjects\Redirect::toRoute('user/login');
+}
+if($_SESSION['profile']==3){
+    Layout::includeLayout('gestorNav');
+}
+else if($_SESSION['profile']==4){
+    Layout::includeLayout('operadorNav');
+}
+else if($_SESSION['profile']==2){
+    Layout::includeLayout('usernav');
+}
+?>
+
+
+
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="<?=Asset::css('forms.css')?>">
+
+</head>
+
+<body>
+<div class="center">
+    <h1>Alterar informações</h1>
+    <form method="post" action="<?=URL::toRoute('user/update',$user->user_id)?>">
+        <div class="txt_field">
+            <input type="text" value="<?=$user->fullname?>" name="fullname" required>
+            <span></span>
+            <label>Nome Completo</label>
+        </div>
+        <div class="txt_field">
+            <input type="date" value="<?=$user->birth_date?>" name="birth_date" required>
+            <span></span>
+            <label>Data de Nascimento</label>
+        </div>
+        <div class="txt_field">
+            <input type="email" value="<?=$user->email?>" name="email" required>
+            <span></span>
+            <label>Email</label>
+        </div>
+        <div class="txt_field">
+            <input type="text" value="<?=$user->phone_number?>" name="phone_number" required>
+            <span></span>
+            <label>Número de Telemóvel</label>
+        </div>
+        <div class="pass"></div>
+        <input type="submit" value="Editar">
+    </form>
+</div>
+</body>
