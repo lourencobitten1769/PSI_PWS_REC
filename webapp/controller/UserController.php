@@ -70,8 +70,8 @@ class UserController extends BaseController implements ResourceControllerInterfa
                 Redirect::toRoute("airport/index");
             }
             else if($_SESSION['profile']==2){
-                //$airport = Aeroporto::all();
-                return View::make('home.index');
+                $airports = Airport::all();
+                return View::make('home.index', ['airports'=>$airports]);
             }
             else if($_SESSION['profile']==3){
                 //$airport = Aeroporto::all();

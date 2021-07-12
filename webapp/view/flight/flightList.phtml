@@ -50,7 +50,10 @@ else{
         <thead>
             <tr>
                 <th scope="col">ID do Voo</th>
-                <th scope="col">Preço do Voo</th>
+                <th scope="col">Preço base do Voo</th>
+                <th scope="col">Preço após 5% de desconto por cada escala</th>
+                <th scope="col">Desconto</th>
+                <th scope="col">Preço com o desconto adicional</th>
                 <th scope="col">Partida</th>
                 <th scope="col">Chegada</th>
                 <th scope="col">Distância</th>
@@ -58,7 +61,11 @@ else{
                 <th scope="col">Destino</th>
                 <th scope="col">Avião de partida</th>
                 <th></th>
-                <th>Desconto</th>
+                <?php
+                if($_SESSION['profile']==5){
+                    echo '<th>Desconto</th>';
+                }?>
+
             </tr>
         </thead>
         <tbody>
@@ -69,6 +76,9 @@ else{
             <tr>
                 <th scope="row"><?=$flight->flight_id?></th>
                 <td><?=$flight->flight_price?></td>
+                <td><?=$flight->price_scale_discount?></td>
+                <td><?=$flight->discount?></td>
+                <td><?=$flight->price_aditional_discount?></td>
                 <td><?=$flight->date_hour_departure?></td>
                 <td><?=$flight->date_hour_arrival?></td>
                 <td><?=$flight->distance?></td>

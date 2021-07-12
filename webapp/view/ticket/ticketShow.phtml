@@ -8,10 +8,9 @@ $ticket= Data::get('ticket');
 
 
     $html="<hr style='border: 5px'><h1 style='text-align: center'>Bilhete para o voo: " . $ticket->flight_id ."</h1><hr style='border: 5px'><br><h3 style='margin-left: 5%'>Origem:  ". $ticket->flight->origin_airport->airport_name . "  =>  Destino: ". $ticket->flight->destination_airport->airport_name . "</h3><hr style='border: 3px solid'>
-        <h5><br>ID do Ticket:" . $ticket->ticket_id . "<hr style='border: 1px dotted'>Preço:".$ticket->total_price. "<br><hr style='border: 1px dotted'>Data de Compra da Passagem: " . $ticket->purchase_date . "<br><hr style='border: 1px dotted'> Ida e volta:" . $ticket->round_trip ."<br><hr style='border: 1px dotted'> Escalas:<h5><hr style='border: 1px dotted'>";
+        <h5><br>ID do Ticket:" . $ticket->ticket_id . "<hr style='border: 1px dotted'>Preço Base do Voo:".$ticket->flight->flight_price . "<hr style='border: 1px dotted'>Preço com 5% de desconto por escala:".$ticket->flight->price_scale_discount. "<br><hr style='border: 1px dotted'>Desconto:".$ticket->flight->discount.  "%<br><hr style='border: 1px dotted'>Preço:".$ticket->total_price. "<br><hr style='border: 1px dotted'>Data de Compra da Passagem: " . $ticket->purchase_date . "<br><hr style='border: 1px dotted'> Ida e volta:" . $ticket->round_trip ."<br><hr style='border: 1px dotted'> Escalas:<h5><hr style='border: 1px dotted'></h5>";
     foreach ($ticket->flight->scale as $scale){
-        $html+= $scale->origin . "<br>" . $scale->destination;
-
+        $html= $html .  $scale->origin_airport->airport_name . "<br>" . $scale->destination_airport->airport_name . "<br><hr>";
     }
 
 
