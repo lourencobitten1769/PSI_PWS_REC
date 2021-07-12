@@ -20,6 +20,9 @@ class User extends Model
             case '2':
                 return 'Utilizador';
                 break;
+            case '5':
+                return 'Gestor De Marketing';
+                break;
         }
     }
 }

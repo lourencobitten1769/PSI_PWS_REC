@@ -45,7 +45,19 @@ class TicketController extends BaseController implements ResourceControllerInter
     public function processCheckin($id){
         $ticket= Ticket::find_by_ticket_id($id);
         $ticket->checkin="Sim";
+        if($ticket->round_trip=="Não"){
+            $ticket->total_price= $ticket->flight->price_aditional_discount;
+        }
+        else{
+            $ticket->total_price=$ticket->flight->price_aditional_discount * 2;
+        }
+
+        $user= User::find_by_user_id($ticket->user_id);
+        $points=$ticket->flight->distance/100;
+        $user->points=$user->points + $points;
+
         $ticket->save();
+        $user->save();
         Redirect::toRoute('ticket/ticketsWithoutCheckin');
     }
 
@@ -91,7 +103,8 @@ class TicketController extends BaseController implements ResourceControllerInter
         $ticket->flight_id=$_SESSION['flight_id'];
         $ticket->user_id=$_SESSION['id'];
 
-        //var_dump($ticket);
+
+
         if($ticket->is_valid()){
             $ticket->save();
             Redirect::toRoute('flight/index');
@@ -100,7 +113,6 @@ class TicketController extends BaseController implements ResourceControllerInter
             Redirect::flashToRoute('flight/confirmTicket', ['ticket' => $ticket]);
         }
     }
-
 
     /**
      * return a detailed view with record where PK = $id

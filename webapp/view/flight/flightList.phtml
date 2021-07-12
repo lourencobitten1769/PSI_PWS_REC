@@ -16,6 +16,9 @@ if(!isset($_SESSION['id'])){
 if($_SESSION['profile']==3){
     Layout::includeLayout('gestornav');
 }
+else if($_SESSION['profile']==5){
+    Layout::includeLayout('marketingnav');
+}
 else{
     Layout::includeLayout('usernav');
 }
@@ -54,6 +57,8 @@ else{
                 <th scope="col">Origem</th>
                 <th scope="col">Destino</th>
                 <th scope="col">Avião de partida</th>
+                <th></th>
+                <th>Desconto</th>
             </tr>
         </thead>
         <tbody>
@@ -75,6 +80,14 @@ else{
                     if($_SESSION['profile']==3){?>
                     <td><a href="<?=URL::toRoute('flight/edit',$flight->flight_id)?>"><button class="btn btn-warning">Editar</button></a><a href="<?=URL::toRoute('flight/destroy',$flight->flight_id)?>"><button class="btn btn-danger">Eliminar</button></a></td>
                 <?php
+                    }
+                    else if($_SESSION['profile']==5){?>
+                        <form action="<?=URL::toRoute('flight/applyDiscount',$flight->flight_id)?>" method="post">
+                            <td><input name="discount" value="<?=$flight->discount?>" placeholder="Desconto"></td>
+                            <td><input class="btn btn-success" type="submit" value="Aplicar Desconto"></td>
+                        </form>
+
+                    <?php
                     }
                     else{?>
                         <td><a href="<?=URL::toRoute('ticket/confirmTicket',$flight->flight_id)?>"><button class="btn btn-success">Comprar</button>

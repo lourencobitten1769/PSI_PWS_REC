@@ -65,7 +65,8 @@ class FlightController extends BaseController implements ResourceControllerInter
         //your form name fields must match the ones of the table fields
         $flight = new Flight(Post::getAll());
         $flight->discount= 0;
-
+        $flight->price_scale_discount=0;
+        $flight->price_aditional_discount=0;
         //var_dump($airplanes);
         if($flight->is_valid()){
             $flight->save();
@@ -119,6 +120,7 @@ class FlightController extends BaseController implements ResourceControllerInter
         $flight = Flight::find([$id]);
         $flight->update_attributes(Post::getAll());
 
+
         if($flight->is_valid()){
             $flight->save();
             Redirect::toRoute('flight/index');
@@ -128,6 +130,15 @@ class FlightController extends BaseController implements ResourceControllerInter
         }
     }
 
+    public function applyDiscount($flight_id)
+    {
+        $flight = Flight::find_by_flight_id($flight_id);
+        $flight->discount= Post::get('discount');
+        $discountValue=$flight->price_scale_discount * ($flight->discount/100);
+        $flight->price_aditional_discount=$flight->price_scale_discount - $discountValue;
+        $flight->save();
+        Redirect::toRoute('flight/index');
+    }
     public function procurar(){
 
         $escolha=Post::get('tipoPesquisa');

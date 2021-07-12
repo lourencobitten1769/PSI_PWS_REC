@@ -66,6 +66,15 @@ class ScaleController extends BaseController implements ResourceControllerInterf
         $scale = new Scale(Post::getAll());
         $scale->flight_id=$_SESSION['flight_id'];
 
+
+        $flight=Flight::find_by_flight_id($scale->flight_id);
+        $numeroEscalas=count($flight->scale) + 1;
+        $descontoEscalas=0.05 * $numeroEscalas;
+        $discountValue=$flight->flight_price * $descontoEscalas;
+        $flight->price_scale_discount=$flight->flight_price - $discountValue;
+
+        $flight->save();
+
         //var_dump($airplanes);
         if($scale->is_valid()){
             $scale->save();

@@ -3,6 +3,8 @@ use ArmoredCore\WebObjects\Asset;
 use ArmoredCore\WebObjects\Layout;
 use ArmoredCore\WebObjects\URL;
 
+$airports=\ArmoredCore\WebObjects\Data::get('airports');
+
 if(isset($_SESSION['id'])){
     Layout::includeLayout('usernav');
 }
@@ -67,15 +69,33 @@ else{
                 </div>
                     <input type="date" id="date_hour_departure" name="date_hour_departure" placeholder="Data de Partida">
                     <!--<div class="txt_field">-->
-                        <input type="text" id="origin" name="origin" hidden required placeholder="Origem">
+                    <label id="label_origin" hidden>Origem:</label>
+                        <select  id="origin" name="origin" hidden required>
+                            <?php
+                            foreach ($airports as $airport){?>
+                                <option value="<?=$airport->airport_id?>"><?=$airport->airport_name?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                        <!--<input type="text" id="origin" name="origin" hidden required placeholder="Origem">
                         <span></span>
-                <!--<label>Origem</label>
-            </div>
-            <div class="txt_field">-->
+
+            </div>-->
+                    <label id="label_destino" hidden>Destino:</label>
+                        <select id="destination" name="destination" hidden required>
+                            <?php
+                            foreach ($airports as $airport){?>
+                                <option value="<?=$airport->airport_id?>"><?=$airport->airport_name?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+            <!--<div class="txt_field">-
                         <input type="text" id="destination" name="destination" hidden required placeholder="Destino">
                         <span></span>
 
-                <!-- <label>Destino</label>
+                <label>Destino</label>
              </div>-->
                     <input type="submit" value="Procurar">
         </div>
@@ -87,12 +107,16 @@ else{
             content.onclick = function (event){
                 if (content.value == "origemDestino"){
                     document.getElementById('date_hour_departure').style.display = 'none';
+                    document.getElementById('label_origin').style.display='block';
+                    document.getElementById('label_destino').style.display='block';
                     document.getElementById('origin').style.display = 'block';
                     document.getElementById('destination').style.display = 'block';
 
                 }
                 else {
                     document.getElementById('date_hour_departure').style.display = 'block';
+                    document.getElementById('label_origin').style.display='none';
+                    document.getElementById('label_destino').style.display='none';
                     document.getElementById('origin').style.display = 'none';
                     document.getElementById('destination').style.display = 'none';
                 }

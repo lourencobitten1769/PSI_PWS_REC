@@ -81,6 +81,10 @@ class UserController extends BaseController implements ResourceControllerInterfa
                 //$airport = Aeroporto::all();
                 Redirect::toRoute("ticket/ticketsWithoutCheckin");
             }
+            else if($_SESSION['profile']==5){
+                //$airport = Aeroporto::all();
+                Redirect::toRoute("flight/index");
+            }
         }
     }
 
@@ -155,7 +159,17 @@ class UserController extends BaseController implements ResourceControllerInterfa
 
         if($user->is_valid()){
             $user->save();
-            Redirect::toRoute('home/index');
+            if($_SESSION['profile']==2){
+                Redirect::toRoute('home/index');
+            }
+            else if($_SESSION['profile']==3){
+                Redirect::toRoute('flight/index');
+            }
+            else if($_SESSION['profile']==3){
+                Redirect::toRoute('ticket/ticketsWithoutCheckin');
+            }
+
+
         } else {
             //redirect to form with data and errors
             Redirect::flashToRoute('user/edit', ['user' => $user]);
