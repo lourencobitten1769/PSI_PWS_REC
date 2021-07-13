@@ -48,6 +48,13 @@ else if($_SESSION['profile']==2){
             <span></span>
             <label>Email</label>
         </div>
+
+        <div class="txt_field">
+            <input type="email" value="<?=$user->points?>" readonly name="points" required>
+            <span></span>
+            <label>Pontos</label>
+        </div>
+
         <div class="txt_field">
             <input type="text" value="<?=$user->phone_number?>" name="phone_number" required>
             <span></span>

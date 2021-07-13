@@ -18,7 +18,13 @@ class HomeController extends BaseController
     public function index(){
 
         $airports= Airport::all();
-        return View::make('home.index', ['airports'=>$airports]);
+        if(isset($_SESSION['id'])){
+            return View::make('home.index' , ['airports'=>$airports]);
+        }
+        else{
+            Redirect::toRoute('user/login');
+        }
+
     }
 
     public function start(){
