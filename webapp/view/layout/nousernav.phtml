@@ -39,12 +39,12 @@ use ArmoredCore\WebObjects\URL;
         <div class="navbar-header">
             <!-- Button for smallest screens -->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-            <a class="navbar-brand" href="<?= URL::toRoute('home/index')?>"><img src="<?= Asset::image('logo.png')?>" alt="WEBlogic MVC"></a>
+            <a class="navbar-brand" href="<?= URL::toRoute('home/index')?>"><img src="<?= Asset::image('logo.png')?> alt="WEBlogic MVC"></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav pull-right">
                 <li class="active"><a href="<?= URL::toRoute('home/index')?>">Procurar Voos</a></li>
-                <li><a href="<?= URL::toRoute('home/start')?>">Consultar todos os voos</a></li>
+                <li><a href="<?= URL::toRoute('home/index')?>">Consultar todos os voos</a></li>
 
 
                 <li><a class="btn" href="<?= URL::toRoute('user/create')?>">Registar</a></li>
