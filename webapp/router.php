@@ -26,6 +26,8 @@ Router::resource('airplane','AirplaneController');
 Router::resource('flight','FlightController');
 Router::resource('scale','ScaleController');
 Router::resource('ticket','TicketController');
+Router::resource('product','ProductController');
+Router::resource('purchase','PurchaseController');
 
 
 
